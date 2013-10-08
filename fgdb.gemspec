@@ -13,10 +13,10 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "fgdb"
-  gem.require_paths = ["lib"]
+  gem.require_paths = ['lib', 'ext']
   gem.version       = FGDB::VERSION
 
-  gem.add_development_dependency 'rake',          ['>= 0']
-  gem.add_development_dependency 'rake-compiler', ['>= 0']
-  gem.add_development_dependency 'rspec',         ['>= 0']
+  # gem.add_development_dependency 'rake',          ['>= 0']
+  # gem.add_development_dependency 'rake-compiler', ['>= 0']
+  # gem.add_development_dependency 'rspec',         ['>= 0']
 end
