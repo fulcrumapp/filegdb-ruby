@@ -1,0 +1,98 @@
+# Variables used in this file:
+# CFG       - The build mode; Release or Debug.
+#             Default value if unspecified - Release.
+# ARCH      - The target bitset for the architecture, 32 or 64.
+#             Default value if unspecified - Default for your machine as 
+#             reported by 'uname -m'.
+#
+# Target option examples:
+# Linux 32-bit on 32-bit Linux - make
+# Linux 32-bit on 64-bit Linux - make ARCH=32
+# Linux 64-bit on 64-bit Linux - make
+# Mac   64-bit on 64-bit Mac   - make
+#
+# Supported build configurations:
+# Linux 32-bit, 64-bit
+# Mac   64-bit
+
+ifndef CFG
+  CFG=Release
+endif
+
+CXDEF=-DUNICODE -D_UNICODE -DUNIX -D_REENTRANT -DFILEGDB_API \
+      -D__USE_FILE_OFFSET64 -DUNIX_FILEGDB_API -D_FILE_OFFSET_BITS=64\
+      -D_LARGEFILE64_SOURCE
+
+CFLAGS=-fPIC
+
+ifndef OS
+  OS := $(shell uname)
+endif
+
+# choose default architecture if unspecified
+ifndef ARCH
+  ARCH=32
+  machineArch := $(shell uname -m)
+  ifeq "$(machineArch)" "x86_64"
+    ARCH=64
+  endif
+endif
+
+ifdef API_BUILD
+  CFLAGS+=-fvisibility=hidden
+
+  ifndef RedHat5
+    RedHat5 := $(shell grep -s -c 'release 5' /etc/redhat-release)
+  endif
+
+  ifeq "$(RedHat5)" "1"
+    CFLAGS+=-Wno-attributes
+  endif
+endif
+
+ifeq "$(CFG)" "Release"
+  ifndef HOST_ARCH
+    CFLAGS+=-O3
+  endif
+endif
+
+ifeq "$(CFG)" "Debug"
+  CFLAGS+=-g
+endif
+
+ifndef HOST_ARCH
+  ifeq "$(ARCH)" "32"
+    CFLAGS+=-m32
+    LDFLAGS=-m32
+    3PLIBDIR=.
+  endif
+  ifeq "$(ARCH)" "64"
+    CFLAGS+=-m64
+    LDFLAGS=-m64
+    ifeq "$(OS)" "Darwin"
+      3PLIBDIR=mac/x64
+      CFLAGS+=-arch x86_64
+      LDFLAGS+=-arch x86_64
+    else
+      3PLIBDIR=x64
+    endif
+  endif
+endif
+
+ifndef CX
+CX=g++
+endif
+
+CXX=$(CX)
+CXOTHER=-I.
+
+SLIBEXT=so
+ifeq "$(OS)" "Darwin"
+  SLIBEXT=dylib
+endif
+
+AR=ar
+ARFLAGS=-rcs
+
+CXX=$(CX)
+CXOTHER=-I.
