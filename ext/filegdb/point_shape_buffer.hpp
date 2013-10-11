@@ -12,6 +12,7 @@ namespace filegdb {
     static VALUE setup(VALUE self, VALUE shapeType);
     static VALUE get_point(VALUE self);
     static VALUE get_z(VALUE self);
+    static VALUE get_m(VALUE self);
 
     virtual VALUE klass();
 

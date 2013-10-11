@@ -135,5 +135,11 @@ describe "FileGDB" do
       shape.setup(9)
       shape.get_z.should eq(0.0)
     end
+
+    it 'gets the m value' do
+      shape = FileGDB::PointShapeBuffer.new
+      shape.setup(11)
+      shape.get_m.should eq(0.0)
+    end
   end
 end
