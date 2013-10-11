@@ -40,4 +40,9 @@ describe 'MultiPointShapeBuffer' do
     @shape.setup(18, NUM_POINTS)
     @shape.get_extent.should eq([0, 0, 0, 0])
   end
+
+  it 'gets the z extent' do
+    @shape.setup(18, NUM_POINTS)
+    @shape.get_z_extent.should eq([0, 0])
+  end
 end
