@@ -133,19 +133,39 @@ describe "FileGDB" do
     it 'gets the z value' do
       shape = FileGDB::PointShapeBuffer.new
       shape.setup(9)
-      shape.get_z.should eq(0.0)
+      shape.z.should eq(0.0)
+    end
+
+    it 'sets the z value' do
+      shape = FileGDB::PointShapeBuffer.new
+      shape.setup(9)
+      shape.z = 10.0
+      shape.z.should eq(10.0)
     end
 
     it 'gets the m value' do
       shape = FileGDB::PointShapeBuffer.new
       shape.setup(11)
-      shape.get_m.should eq(0.0)
+      shape.m.should eq(0.0)
+    end
+
+    it 'sets the m value' do
+      shape = FileGDB::PointShapeBuffer.new
+      shape.setup(11)
+      shape.m = 10.0
+      shape.m.should eq(10.0)
     end
 
     it 'gets the id value' do
       shape = FileGDB::PointShapeBuffer.new
       shape.setup(11)
-      lambda { shape.get_id }.should raise_error
+      lambda { shape.id }.should raise_error
+    end
+
+    it 'sets the id value' do
+      shape = FileGDB::PointShapeBuffer.new
+      shape.setup(11)
+      lambda { shape.id = 1 }.should raise_error
     end
   end
 end

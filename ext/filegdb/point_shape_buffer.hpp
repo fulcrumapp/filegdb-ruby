@@ -14,6 +14,9 @@ namespace filegdb {
     static VALUE get_z(VALUE self);
     static VALUE get_m(VALUE self);
     static VALUE get_id(VALUE self);
+    static VALUE set_z(VALUE self, VALUE zValue);
+    static VALUE set_m(VALUE self, VALUE mValue);
+    static VALUE set_id(VALUE self, VALUE idValue);
 
     virtual VALUE klass();
 

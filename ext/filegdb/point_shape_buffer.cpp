@@ -87,15 +87,75 @@ VALUE point_shape_buffer::get_id(VALUE self) {
   return INT2FIX(*result);
 }
 
+VALUE point_shape_buffer::set_z(VALUE self, VALUE zValue) {
+  CHECK_ARGUMENT_FLOAT(zValue);
+
+  point_shape_buffer *shape = unwrap(self);
+
+  double *result = NULL;
+
+  fgdbError hr = shape->value().GetZ(result);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  *result = NUM2DBL(zValue);
+
+  return zValue;
+}
+
+VALUE point_shape_buffer::set_m(VALUE self, VALUE mValue) {
+  CHECK_ARGUMENT_FLOAT(mValue);
+
+  point_shape_buffer *shape = unwrap(self);
+
+  double *result = NULL;
+
+  fgdbError hr = shape->value().GetM(result);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  *result = NUM2DBL(mValue);
+
+  return mValue;
+}
+
+VALUE point_shape_buffer::set_id(VALUE self, VALUE idValue) {
+  CHECK_ARGUMENT_FIXNUM(idValue);
+
+  point_shape_buffer *shape = unwrap(self);
+
+  int *result = NULL;
+
+  fgdbError hr = shape->value().GetID(result);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  *result = FIX2INT(idValue);
+
+  return idValue;
+}
+
 void point_shape_buffer::define(VALUE module)
 {
   point_shape_buffer::_klass = rb_define_class_under(module, "PointShapeBuffer", shape_buffer::_klass);
   base::define(point_shape_buffer::_klass, true);
   rb_define_method(point_shape_buffer::_klass, "setup", FGDB_METHOD(point_shape_buffer::setup), 1);
   rb_define_method(point_shape_buffer::_klass, "get_point", FGDB_METHOD(point_shape_buffer::get_point), 0);
-  rb_define_method(point_shape_buffer::_klass, "get_z", FGDB_METHOD(point_shape_buffer::get_z), 0);
-  rb_define_method(point_shape_buffer::_klass, "get_m", FGDB_METHOD(point_shape_buffer::get_m), 0);
-  rb_define_method(point_shape_buffer::_klass, "get_id", FGDB_METHOD(point_shape_buffer::get_id), 0);
+  rb_define_method(point_shape_buffer::_klass, "z", FGDB_METHOD(point_shape_buffer::get_z), 0);
+  rb_define_method(point_shape_buffer::_klass, "m", FGDB_METHOD(point_shape_buffer::get_m), 0);
+  rb_define_method(point_shape_buffer::_klass, "id", FGDB_METHOD(point_shape_buffer::get_id), 0);
+  rb_define_method(point_shape_buffer::_klass, "z=", FGDB_METHOD(point_shape_buffer::set_z), 1);
+  rb_define_method(point_shape_buffer::_klass, "m=", FGDB_METHOD(point_shape_buffer::set_m), 1);
+  rb_define_method(point_shape_buffer::_klass, "id=", FGDB_METHOD(point_shape_buffer::set_id), 1);
 }
 
 }
