@@ -10,14 +10,7 @@ namespace filegdb {
     static void define(VALUE module);
 
     static VALUE setup(VALUE self, VALUE shapeType, VALUE numberOfPoints);
-    static VALUE extents(VALUE self);
-    /* static VALUE get_point(VALUE self); */
-    /* static VALUE get_z(VALUE self); */
-    /* static VALUE get_m(VALUE self); */
-    /* static VALUE get_id(VALUE self); */
-    /* static VALUE set_z(VALUE self, VALUE zValue); */
-    /* static VALUE set_m(VALUE self, VALUE mValue); */
-    /* static VALUE set_id(VALUE self, VALUE idValue); */
+    static VALUE get_points(VALUE self);
 
     virtual VALUE klass();
 
