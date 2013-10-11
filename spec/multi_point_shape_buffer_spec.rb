@@ -11,9 +11,13 @@ describe 'MultiPointShapeBuffer' do
     lambda { @shape.setup(8, NUM_POINTS) }.should_not raise_error
   end
 
+  it 'gets the number of points' do
+    @shape.setup(8, NUM_POINTS)
+    @shape.get_num_points.should eq(NUM_POINTS)
+  end
+
   it 'gets the points' do
     @shape.setup(8, NUM_POINTS)
-    points = @shape.get_points
-    points.should have(3).items
+    @shape.get_points.should have(3).items
   end
 end
