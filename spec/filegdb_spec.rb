@@ -130,5 +130,10 @@ describe "FileGDB" do
       lambda { row.set_geometry(nil) }.should raise_error
     end
 
+    it 'gets the z value' do
+      shape = FileGDB::PointShapeBuffer.new
+      shape.setup(9)
+      shape.get_z.should eq(0.0)
+    end
   end
 end

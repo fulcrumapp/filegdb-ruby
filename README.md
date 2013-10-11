@@ -10,7 +10,7 @@ Add this to your `Gemfile`
 gem 'filegdb'
 ```
 
-- OR install manually -
+OR install manually
 
 ```sh
 gem install filegdb
