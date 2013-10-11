@@ -13,6 +13,7 @@ namespace filegdb {
     static VALUE get_point(VALUE self);
     static VALUE get_z(VALUE self);
     static VALUE get_m(VALUE self);
+    static VALUE get_id(VALUE self);
 
     virtual VALUE klass();
 

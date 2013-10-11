@@ -72,6 +72,21 @@ VALUE point_shape_buffer::get_m(VALUE self) {
   return rb_float_new(*result);
 }
 
+VALUE point_shape_buffer::get_id(VALUE self) {
+  point_shape_buffer *shape = unwrap(self);
+
+  int *result = NULL;
+
+  fgdbError hr = shape->value().GetID(result);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return INT2FIX(*result);
+}
+
 void point_shape_buffer::define(VALUE module)
 {
   point_shape_buffer::_klass = rb_define_class_under(module, "PointShapeBuffer", shape_buffer::_klass);
@@ -80,6 +95,7 @@ void point_shape_buffer::define(VALUE module)
   rb_define_method(point_shape_buffer::_klass, "get_point", FGDB_METHOD(point_shape_buffer::get_point), 0);
   rb_define_method(point_shape_buffer::_klass, "get_z", FGDB_METHOD(point_shape_buffer::get_z), 0);
   rb_define_method(point_shape_buffer::_klass, "get_m", FGDB_METHOD(point_shape_buffer::get_m), 0);
+  rb_define_method(point_shape_buffer::_klass, "get_id", FGDB_METHOD(point_shape_buffer::get_id), 0);
 }
 
 }

@@ -141,5 +141,11 @@ describe "FileGDB" do
       shape.setup(11)
       shape.get_m.should eq(0.0)
     end
+
+    it 'gets the id value' do
+      shape = FileGDB::PointShapeBuffer.new
+      shape.setup(11)
+      lambda { shape.get_id }.should raise_error
+    end
   end
 end
