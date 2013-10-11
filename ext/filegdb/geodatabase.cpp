@@ -2,7 +2,7 @@
 #include "geodatabase.hpp"
 #include "table.hpp"
 
-namespace fgdb {
+namespace filegdb {
 
 VALUE geodatabase::_klass = Qnil;
 
@@ -26,12 +26,6 @@ geodatabase::~geodatabase()
   if (_gdb) {
     CloseGeodatabase(*_gdb);
   }
-}
-
-VALUE geodatabase::initialize(int argc, VALUE *argv)
-{
-  rb_raise(rb_eRuntimeError, "You cannot use #new on FGDB. Use #create or #open");
-  return Qnil;
 }
 
 void geodatabase::mark() {
@@ -74,10 +68,41 @@ VALUE geodatabase::open(VALUE klass, VALUE filename) {
   return db->wrapped();
 }
 
+VALUE geodatabase::delete_database(VALUE klass, VALUE filename) {
+  fgdbError hr;
+  std::wstring name = to_wstring(RSTRING_PTR(filename));
+
+  hr = DeleteGeodatabase(name);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return Qnil;
+}
+
+VALUE geodatabase::close(VALUE self) {
+  fgdbError hr;
+
+  geodatabase *db = unwrap(self);
+
+  hr = CloseGeodatabase(*db->_gdb);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  db->_value = NULL;
+
+  return Qnil;
+}
+
 VALUE geodatabase::create_table(VALUE self, VALUE table_name, VALUE table_definition) {
   geodatabase *db = unwrap(self);
 
-  fgdb::table *result = new fgdb::table(db);
+  filegdb::table *result = new filegdb::table(db);
 
   std::wstring name = to_wstring(RSTRING_PTR(table_name));
   std::string table_def = std::string(RSTRING_PTR(table_definition));
@@ -90,9 +115,30 @@ VALUE geodatabase::create_table(VALUE self, VALUE table_name, VALUE table_defini
     return Qnil;
   }
 
+  db->add_dependency(result);
+
   return result->wrapped();
 }
 
+VALUE geodatabase::open_table(VALUE self, VALUE table_name) {
+  geodatabase *db = unwrap(self);
+
+  table *result = new filegdb::table(db);
+
+  std::wstring name = to_wstring(RSTRING_PTR(table_name));
+
+  fgdbError hr = db->_gdb->OpenTable(name, result->value());
+
+  if (FGDB_IS_FAILURE(hr)) {
+    delete result;
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  db->add_dependency(result);
+
+  return result->wrapped();
+}
 
 VALUE geodatabase::get_child_datasets(VALUE self, VALUE parent_path, VALUE dataset_type) {
   geodatabase *db = unwrap(self);
@@ -139,10 +185,13 @@ VALUE geodatabase::get_dataset_definition(VALUE self, VALUE path, VALUE dataset_
 void geodatabase::define(VALUE module)
 {
   geodatabase::_klass = rb_define_class_under(module, "Geodatabase", rb_cObject);
-  base::define(geodatabase::_klass);
+  base::define(geodatabase::_klass, false);
   rb_define_singleton_method(geodatabase::_klass, "create", FGDB_METHOD(geodatabase::create), 1);
   rb_define_singleton_method(geodatabase::_klass, "open", FGDB_METHOD(geodatabase::open), 1);
+  rb_define_singleton_method(geodatabase::_klass, "delete", FGDB_METHOD(geodatabase::delete_database), 1);
+  rb_define_method(geodatabase::_klass, "close", FGDB_METHOD(geodatabase::close), 0);
   rb_define_method(geodatabase::_klass, "create_table", FGDB_METHOD(geodatabase::create_table), 2);
+  rb_define_method(geodatabase::_klass, "open_table", FGDB_METHOD(geodatabase::open_table), 1);
   rb_define_method(geodatabase::_klass, "get_child_datasets", FGDB_METHOD(geodatabase::get_child_datasets), 2);
   rb_define_method(geodatabase::_klass, "get_dataset_definition", FGDB_METHOD(geodatabase::get_dataset_definition), 2);
 }

@@ -1,7 +1,7 @@
 
 #include "point.hpp"
 
-namespace fgdb {
+namespace filegdb {
 
 VALUE point::_klass = Qnil;
 
@@ -32,7 +32,7 @@ VALUE point::get_y(VALUE self) {
 void point::define(VALUE module)
 {
   point::_klass = rb_define_class_under(module, "Point", rb_cObject);
-  base::define(point::_klass);
+  base::define(point::_klass, false);
   rb_define_method(point::_klass, "x=", FGDB_METHOD(point::set_x), 1);
   rb_define_method(point::_klass, "x", FGDB_METHOD(point::get_x), 0);
   rb_define_method(point::_klass, "y=", FGDB_METHOD(point::set_y), 1);

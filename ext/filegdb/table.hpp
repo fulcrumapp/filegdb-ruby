@@ -1,15 +1,14 @@
 #ifndef __FGDB_TABLE_HPP__
 #define __FGDB_TABLE_HPP__
 
-#include "fgdb.hpp"
+#include "filegdb.hpp"
 #include "geodatabase.hpp"
 
-namespace fgdb {
+namespace filegdb {
   class table : public base<table> {
   public:
     table() : base<table>() {};
     table(geodatabase *db);
-    virtual VALUE initialize(int argc, VALUE *argv);
     static VALUE create_row_object(VALUE self);
     static VALUE insert(VALUE self, VALUE row);
     static void define(VALUE module);

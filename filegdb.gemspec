@@ -1,22 +1,23 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/fgdb/version', __FILE__)
+require File.expand_path('../lib/filegdb/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Zac McCormick"]
   gem.email         = ["zac.mccormick@gmail.com"]
   gem.description   = %q{ESRI FileGDB bindings for ruby}
   gem.summary       = %q{ESRI FileGDB bindings for ruby. Currently contains native extensions for FileGDB API 1.3}
-  gem.homepage      = "https://github.com/zhm/fgdb-ruby"
+  gem.homepage      = "https://github.com/spatialnetworks/filegdb-ruby"
+  gem.licenses      = ['BSD']
 
   gem.files         = `git ls-files`.split($\)
-  gem.extensions    = ['ext/fgdb/extconf.rb']
+  gem.extensions    = ['ext/filegdb/extconf.rb']
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "fgdb"
+  gem.name          = "filegdb"
   gem.require_paths = ['lib', 'ext']
-  gem.version       = FGDB::VERSION
+  gem.version       = FileGDB::VERSION
 
-  # gem.add_development_dependency 'rake',          ['>= 0']
-  # gem.add_development_dependency 'rake-compiler', ['>= 0']
-  # gem.add_development_dependency 'rspec',         ['>= 0']
+  gem.add_development_dependency 'rake',          ['>= 0']
+  gem.add_development_dependency 'rake-compiler', ['>= 0']
+  gem.add_development_dependency 'rspec',         ['>= 0']
 end

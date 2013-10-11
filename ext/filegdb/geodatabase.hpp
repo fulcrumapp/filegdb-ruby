@@ -1,10 +1,10 @@
 #ifndef __FGDB_GEODATABASE_HPP__
 #define __FGDB_GEODATABASE_HPP__
 
-#include "fgdb.hpp"
+#include "filegdb.hpp"
 #include "base.hpp"
 
-namespace fgdb {
+namespace filegdb {
   class table;
 
   class geodatabase : public base<geodatabase> {
@@ -12,7 +12,10 @@ namespace fgdb {
     geodatabase();
     static VALUE create(VALUE klass, VALUE filename);
     static VALUE open(VALUE klass, VALUE filename);
+    static VALUE delete_database(VALUE klass, VALUE filename);
+    static VALUE close(VALUE self);
     static VALUE create_table(VALUE self, VALUE table_name, VALUE table_definition);
+    static VALUE open_table(VALUE self, VALUE table_name);
     static VALUE get_child_datasets(VALUE self, VALUE parent_path, VALUE dataset_type);
     static VALUE get_dataset_definition(VALUE self, VALUE path, VALUE dataset_type);
 
@@ -20,7 +23,6 @@ namespace fgdb {
 
     virtual ~geodatabase();
 
-    virtual VALUE initialize(int argc, VALUE *argv);
     virtual void mark();
     virtual VALUE klass();
 

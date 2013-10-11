@@ -1,10 +1,10 @@
 #ifndef __FGDB_SHAPE_BUFFER_BASE_HPP__
 #define __FGDB_SHAPE_BUFFER_BASE_HPP__
 
-#include "fgdb.hpp"
+#include "filegdb.hpp"
 #include "base.hpp"
 
-namespace fgdb {
+namespace filegdb {
   template <typename T, typename S>
   class shape_buffer_base : public base<T> {
   public:
@@ -19,7 +19,7 @@ namespace fgdb {
 
     virtual VALUE initialize(int argc, VALUE *argv) {
       _shape_buffer = new S;
-      return base<T>::rvalue();
+      return base<T>::wrapped();
     }
 
     S &value() { return *_shape_buffer; }

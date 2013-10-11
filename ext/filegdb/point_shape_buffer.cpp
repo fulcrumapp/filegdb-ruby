@@ -3,7 +3,7 @@
 #include "shape_buffer.hpp"
 #include "point_shape_buffer.hpp"
 
-namespace fgdb {
+namespace filegdb {
 
 VALUE point_shape_buffer::_klass = Qnil;
 
@@ -22,7 +22,7 @@ VALUE point_shape_buffer::setup(VALUE self, VALUE shapeType) {
     FGDB_RAISE_ERROR(hr);
   }
 
-  return shape->rvalue();
+  return shape->wrapped();
 }
 
 VALUE point_shape_buffer::get_point(VALUE self) {
@@ -38,13 +38,14 @@ VALUE point_shape_buffer::get_point(VALUE self) {
   }
 
   point *result = new point(out);
+
   return result->wrapped();
 }
 
 void point_shape_buffer::define(VALUE module)
 {
   point_shape_buffer::_klass = rb_define_class_under(module, "PointShapeBuffer", shape_buffer::_klass);
-  base::define(point_shape_buffer::_klass);
+  base::define(point_shape_buffer::_klass, true);
   rb_define_method(point_shape_buffer::_klass, "setup", FGDB_METHOD(point_shape_buffer::setup), 1);
   rb_define_method(point_shape_buffer::_klass, "get_point", FGDB_METHOD(point_shape_buffer::get_point), 0);
 }

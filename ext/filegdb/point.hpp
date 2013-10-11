@@ -1,10 +1,10 @@
 #ifndef __FGDB_POINT_HPP__
 #define __FGDB_POINT_HPP__
 
-#include "fgdb.hpp"
+#include "filegdb.hpp"
 #include "base.hpp"
 
-namespace fgdb {
+namespace filegdb {
   class point : public base<point> {
   public:
     point() : value(0) {};
@@ -22,8 +22,6 @@ namespace fgdb {
     static VALUE _klass;
 
     virtual ~point() {};
-
-    virtual VALUE initialize(int argc, VALUE *argv) { return initialize_not_allowed(); }
 
     Point *value;
   };

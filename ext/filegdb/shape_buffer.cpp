@@ -1,7 +1,7 @@
 
 #include "shape_buffer.hpp"
 
-namespace fgdb {
+namespace filegdb {
 
 VALUE shape_buffer::_klass = Qnil;
 
@@ -12,7 +12,7 @@ VALUE shape_buffer::klass() {
 void shape_buffer::define(VALUE module)
 {
   shape_buffer::_klass = rb_define_class_under(module, "ShapeBuffer", rb_cObject);
-  base::define(shape_buffer::_klass);
+  base::define(shape_buffer::_klass, true);
 }
 
 }

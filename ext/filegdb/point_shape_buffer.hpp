@@ -1,10 +1,10 @@
 #ifndef __FGDB_POINT_SHAPE_BUFFER_HPP__
 #define __FGDB_POINT_SHAPE_BUFFER_HPP__
 
-#include "fgdb.hpp"
+#include "filegdb.hpp"
 #include "shape_buffer_base.hpp"
 
-namespace fgdb {
+namespace filegdb {
   class point_shape_buffer : public shape_buffer_base<point_shape_buffer, PointShapeBuffer> {
   public:
     static void define(VALUE module);
