@@ -17,6 +17,7 @@ namespace filegdb {
     static VALUE get_ids(VALUE self);
     static VALUE get_extent(VALUE self);
     static VALUE get_z_extent(VALUE self);
+    static VALUE get_m_extent(VALUE self);
 
     virtual VALUE klass();
 

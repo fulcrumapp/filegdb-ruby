@@ -200,6 +200,26 @@ VALUE multi_point_shape_buffer::get_z_extent(VALUE self)
   return result;
 }
 
+VALUE multi_point_shape_buffer::get_m_extent(VALUE self)
+{
+  multi_point_shape_buffer *shape = unwrap(self);
+
+  double *extents = NULL;
+
+  fgdbError hr = shape->value().GetMExtent(extents);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+  }
+
+  VALUE result = rb_ary_new();
+
+  rb_ary_push(result, DBL2NUM(extents[0]));
+  rb_ary_push(result, DBL2NUM(extents[1]));
+
+  return result;
+}
+
 void multi_point_shape_buffer::define(VALUE module)
 {
   multi_point_shape_buffer::_klass = rb_define_class_under(module, "MultiPointShapeBuffer", shape_buffer::_klass);
@@ -212,6 +232,7 @@ void multi_point_shape_buffer::define(VALUE module)
   rb_define_method(multi_point_shape_buffer::_klass, "id", FGDB_METHOD(multi_point_shape_buffer::get_ids), 0);
   rb_define_method(multi_point_shape_buffer::_klass, "get_extent", FGDB_METHOD(multi_point_shape_buffer::get_extent), 0);
   rb_define_method(multi_point_shape_buffer::_klass, "get_z_extent", FGDB_METHOD(multi_point_shape_buffer::get_z_extent), 0);
+  rb_define_method(multi_point_shape_buffer::_klass, "get_m_extent", FGDB_METHOD(multi_point_shape_buffer::get_m_extent), 0);
 }
 
 }
