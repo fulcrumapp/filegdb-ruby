@@ -30,4 +30,9 @@ describe 'MultiPointShapeBuffer' do
     @shape.setup(18, NUM_POINTS)
     @shape.m.should have(3).items
   end
+
+  it 'gets the id values' do
+    @shape.setup(18, NUM_POINTS)
+    lambda { @shape.id }.should raise_error
+  end
 end
