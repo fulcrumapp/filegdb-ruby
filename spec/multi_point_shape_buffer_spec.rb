@@ -35,4 +35,9 @@ describe 'MultiPointShapeBuffer' do
     @shape.setup(18, NUM_POINTS)
     lambda { @shape.id }.should raise_error
   end
+
+  it 'gets the extent' do
+    @shape.setup(18, NUM_POINTS)
+    @shape.get_extent.should eq([0, 0, 0, 0])
+  end
 end
