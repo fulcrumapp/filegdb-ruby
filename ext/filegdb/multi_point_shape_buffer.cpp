@@ -71,6 +71,64 @@ VALUE multi_point_shape_buffer::get_num_points(VALUE self) {
   return INT2FIX(numPoints);
 }
 
+VALUE multi_point_shape_buffer::get_zs(VALUE self)
+{
+  multi_point_shape_buffer *shape = unwrap(self);
+
+  double *zValues;
+
+  fgdbError hr = shape->value().GetZs(zValues);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+  }
+
+  int numPoints = 0;
+
+  hr = shape->value().GetNumPoints(numPoints);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+  }
+
+  VALUE result = rb_ary_new();
+
+  for (int i = 0; i < numPoints; ++i) {
+    rb_ary_push(result, rb_float_new(zValues[i]));
+  }
+
+  return result;
+}
+
+VALUE multi_point_shape_buffer::get_ms(VALUE self)
+{
+  multi_point_shape_buffer *shape = unwrap(self);
+
+  double *mValues;
+
+  fgdbError hr = shape->value().GetMs(mValues);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+  }
+
+  int numPoints = 0;
+
+  hr = shape->value().GetNumPoints(numPoints);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+  }
+
+  VALUE result = rb_ary_new();
+
+  for (int i = 0; i < numPoints; ++i) {
+    rb_ary_push(result, rb_float_new(mValues[i]));
+  }
+
+  return result;
+}
+
 void multi_point_shape_buffer::define(VALUE module)
 {
   multi_point_shape_buffer::_klass = rb_define_class_under(module, "MultiPointShapeBuffer", shape_buffer::_klass);
@@ -78,6 +136,8 @@ void multi_point_shape_buffer::define(VALUE module)
   rb_define_method(multi_point_shape_buffer::_klass, "setup", FGDB_METHOD(multi_point_shape_buffer::setup), 2);
   rb_define_method(multi_point_shape_buffer::_klass, "get_points", FGDB_METHOD(multi_point_shape_buffer::get_points), 0);
   rb_define_method(multi_point_shape_buffer::_klass, "get_num_points", FGDB_METHOD(multi_point_shape_buffer::get_num_points), 0);
+  rb_define_method(multi_point_shape_buffer::_klass, "z", FGDB_METHOD(multi_point_shape_buffer::get_zs), 0);
+  rb_define_method(multi_point_shape_buffer::_klass, "m", FGDB_METHOD(multi_point_shape_buffer::get_ms), 0);
 }
 
 }

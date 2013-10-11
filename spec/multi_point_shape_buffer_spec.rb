@@ -20,4 +20,14 @@ describe 'MultiPointShapeBuffer' do
     @shape.setup(8, NUM_POINTS)
     @shape.get_points.should have(3).items
   end
+
+  it 'gets the z values' do
+    @shape.setup(18, NUM_POINTS)
+    @shape.z.should have(3).items
+  end
+
+  it 'gets the m values' do
+    @shape.setup(18, NUM_POINTS)
+    @shape.m.should have(3).items
+  end
 end
