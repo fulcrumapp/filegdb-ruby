@@ -7,7 +7,7 @@
 namespace filegdb {
   class table : public base<table> {
   public:
-    table() : base<table>() {};
+    table() : base<table>(), _table(0) {};
     table(geodatabase *db);
     static VALUE create_row_object(VALUE self);
     static VALUE insert(VALUE self, VALUE row);

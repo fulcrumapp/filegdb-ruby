@@ -190,6 +190,25 @@ VALUE geodatabase::move(VALUE self, VALUE parentPath, VALUE newParentPath) {
   return Qnil;
 }
 
+VALUE geodatabase::delete_dataset(VALUE self, VALUE path, VALUE datasetType) {
+  CHECK_ARGUMENT_STRING(path);
+  CHECK_ARGUMENT_STRING(datasetType);
+
+  geodatabase *db = unwrap(self);
+
+  std::wstring wpath = to_wstring(RSTRING_PTR(path));
+  std::wstring wdatasetType = to_wstring(RSTRING_PTR(datasetType));
+
+  fgdbError hr = db->_gdb->Delete(wpath, wdatasetType);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return Qnil;
+}
+
 VALUE geodatabase::get_child_datasets(VALUE self, VALUE parent_path, VALUE dataset_type) {
   geodatabase *db = unwrap(self);
 
@@ -419,6 +438,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "rename", FGDB_METHOD(geodatabase::rename), 3);
   rb_define_method(geodatabase::_klass, "move", FGDB_METHOD(geodatabase::move), 2);
   rb_define_method(geodatabase::_klass, "create_feature_dataset", FGDB_METHOD(geodatabase::create_feature_dataset), 1);
+  rb_define_method(geodatabase::_klass, "delete", FGDB_METHOD(geodatabase::delete_dataset), 2);
 }
 
 }

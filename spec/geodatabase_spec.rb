@@ -67,5 +67,10 @@ describe "FileGDB" do
   it 'moves a table' do
     lambda { @db.move('TestTable', 'TestTable2') }.should raise_error
   end
+
+  it 'deletes a table' do
+    @db.close_table(@table)
+    lambda { @db.delete('\\TestTable', 'Table') }.should_not raise_error
+  end
 end
 
