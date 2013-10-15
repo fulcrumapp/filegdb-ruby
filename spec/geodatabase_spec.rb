@@ -50,5 +50,9 @@ describe "FileGDB" do
   it 'gets the related dataset definitions' do
     @db.get_related_dataset_definitions('\\TestTable', '', 'Table').should have(0).items
   end
+
+  it 'creates a feature dataset' do
+    lambda { @db.create_feature_dataset(feature_dataset_definition) }.should_not raise_error
+  end
 end
 

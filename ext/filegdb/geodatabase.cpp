@@ -120,6 +120,21 @@ VALUE geodatabase::create_table(VALUE self, VALUE table_name, VALUE table_defini
   return result->wrapped();
 }
 
+VALUE geodatabase::create_feature_dataset(VALUE self, VALUE featureDatasetDefinition) {
+  CHECK_ARGUMENT_STRING(featureDatasetDefinition);
+
+  geodatabase *db = unwrap(self);
+
+  fgdbError hr = db->_gdb->CreateFeatureDataset(std::string(RSTRING_PTR(featureDatasetDefinition)));
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return Qnil;
+}
+
 VALUE geodatabase::open_table(VALUE self, VALUE table_name) {
   geodatabase *db = unwrap(self);
 
@@ -344,6 +359,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "get_dataset_types", FGDB_METHOD(geodatabase::get_dataset_types), 0);
   rb_define_method(geodatabase::_klass, "get_dataset_relationship_types", FGDB_METHOD(geodatabase::get_dataset_relationship_types), 0);
   rb_define_method(geodatabase::_klass, "get_related_datasets", FGDB_METHOD(geodatabase::get_related_datasets), 3);
+  rb_define_method(geodatabase::_klass, "create_feature_dataset", FGDB_METHOD(geodatabase::create_feature_dataset), 1);
 }
 
 }

@@ -16,6 +16,10 @@ def table_definition
   File.read(File.join(data_directory, 'table_definition.xml'))
 end
 
+def feature_dataset_definition
+  File.read(File.join(data_directory, 'feature_dataset_definition.xml'))
+end
+
 def create_database
   FileGDB::Geodatabase.create(TEST_FILE_NAME)
 end
