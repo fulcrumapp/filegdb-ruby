@@ -26,5 +26,9 @@ describe "FileGDB" do
   it 'gets the dataset relationship types' do
     @db.get_dataset_relationship_types.should have(16).items
   end
+
+  it 'gets the child datasets' do
+    @db.get_child_datasets('', '').should have(0).items
+  end
 end
 
