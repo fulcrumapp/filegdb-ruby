@@ -63,5 +63,9 @@ describe "FileGDB" do
     lambda { @db.rename('\\TestTable', 'Table', 'TestTableNew') }.should_not raise_error
     @db.get_dataset_definition('\\TestTableNew', 'Table').length.should eq(5839)
   end
+
+  it 'moves a table' do
+    lambda { @db.move('TestTable', 'TestTable2') }.should raise_error
+  end
 end
 
