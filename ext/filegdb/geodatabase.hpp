@@ -20,6 +20,7 @@ namespace filegdb {
     static VALUE get_dataset_definition(VALUE self, VALUE path, VALUE dataset_type);
     static VALUE get_dataset_types(VALUE self);
     static VALUE get_dataset_relationship_types(VALUE self);
+    static VALUE get_related_datasets(VALUE self, VALUE path, VALUE relType, VALUE datasetType);
 
     static void define(VALUE module);
 

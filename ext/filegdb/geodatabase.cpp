@@ -224,6 +224,34 @@ VALUE geodatabase::get_dataset_relationship_types(VALUE self) {
   return result;
 }
 
+VALUE geodatabase::get_related_datasets(VALUE self, VALUE path, VALUE relType, VALUE datasetType) {
+  CHECK_ARGUMENT_STRING(path);
+  CHECK_ARGUMENT_STRING(relType);
+  CHECK_ARGUMENT_STRING(datasetType);
+
+  geodatabase *db = unwrap(self);
+
+  std::vector<std::wstring> datasets;
+  std::wstring wpath = to_wstring(RSTRING_PTR(path));
+  std::wstring wrelType = to_wstring(RSTRING_PTR(relType));
+  std::wstring wdatasetType = to_wstring(RSTRING_PTR(datasetType));
+
+  fgdbError hr = db->_gdb->GetRelatedDatasets(wpath, wrelType, wdatasetType, datasets);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  VALUE result = rb_ary_new();
+
+  for (typename std::vector<wstring>::iterator it = datasets.begin(); it != datasets.end(); ++it) {
+    rb_ary_push(result, rb_str_new2(to_char_array(*it)));
+  }
+
+  return result;
+}
+
 void geodatabase::define(VALUE module)
 {
   geodatabase::_klass = rb_define_class_under(module, "Geodatabase", rb_cObject);
@@ -238,6 +266,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "get_dataset_definition", FGDB_METHOD(geodatabase::get_dataset_definition), 2);
   rb_define_method(geodatabase::_klass, "get_dataset_types", FGDB_METHOD(geodatabase::get_dataset_types), 0);
   rb_define_method(geodatabase::_klass, "get_dataset_relationship_types", FGDB_METHOD(geodatabase::get_dataset_relationship_types), 0);
+  rb_define_method(geodatabase::_klass, "get_related_datasets", FGDB_METHOD(geodatabase::get_related_datasets), 3);
 }
 
 }

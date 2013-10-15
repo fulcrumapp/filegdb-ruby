@@ -30,5 +30,9 @@ describe "FileGDB" do
   it 'gets the child datasets' do
     @db.get_child_datasets('', '').should have(0).items
   end
+
+  it 'gets the related datasets' do
+    @db.get_related_datasets('', '', '').should have(0).items
+  end
 end
 
