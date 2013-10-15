@@ -58,5 +58,10 @@ describe "FileGDB" do
   it 'closes a table' do
     lambda { @db.close_table(@table) }.should_not raise_error
   end
+
+  it 'renames a table' do
+    lambda { @db.rename('\\TestTable', 'Table', 'TestTableNew') }.should_not raise_error
+    @db.get_dataset_definition('\\TestTableNew', 'Table').length.should eq(5839)
+  end
 end
 

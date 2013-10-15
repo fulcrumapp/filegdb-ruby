@@ -233,6 +233,27 @@ VALUE geodatabase::get_dataset_documentation(VALUE self, VALUE path, VALUE datas
   return rb_str_new2(documentation.c_str());
 }
 
+VALUE geodatabase::rename(VALUE self, VALUE path, VALUE datasetType, VALUE newName) {
+  CHECK_ARGUMENT_STRING(path);
+  CHECK_ARGUMENT_STRING(datasetType);
+  CHECK_ARGUMENT_STRING(newName);
+
+  geodatabase *db = unwrap(self);
+
+  std::wstring wpath = to_wstring(RSTRING_PTR(path));
+  std::wstring wdatasetType = to_wstring(RSTRING_PTR(datasetType));
+  std::wstring wnewName = to_wstring(RSTRING_PTR(newName));
+
+  fgdbError hr = db->_gdb->Rename(wpath, wdatasetType, wnewName);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return Qnil;
+}
+
 VALUE geodatabase::get_child_dataset_definitions(VALUE self, VALUE parentPath, VALUE datasetType) {
   CHECK_ARGUMENT_STRING(parentPath);
   CHECK_ARGUMENT_STRING(datasetType);
@@ -376,6 +397,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "get_dataset_types", FGDB_METHOD(geodatabase::get_dataset_types), 0);
   rb_define_method(geodatabase::_klass, "get_dataset_relationship_types", FGDB_METHOD(geodatabase::get_dataset_relationship_types), 0);
   rb_define_method(geodatabase::_klass, "get_related_datasets", FGDB_METHOD(geodatabase::get_related_datasets), 3);
+  rb_define_method(geodatabase::_klass, "rename", FGDB_METHOD(geodatabase::rename), 3);
   rb_define_method(geodatabase::_klass, "create_feature_dataset", FGDB_METHOD(geodatabase::create_feature_dataset), 1);
 }
 

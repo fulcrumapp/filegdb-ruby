@@ -18,6 +18,7 @@ namespace filegdb {
     static VALUE create_feature_dataset(VALUE self, VALUE featureSetDefinition);
     static VALUE open_table(VALUE self, VALUE tableName);
     static VALUE close_table(VALUE self, VALUE table);
+    static VALUE rename(VALUE self, VALUE path, VALUE datasetType, VALUE newName);
     static VALUE get_child_datasets(VALUE self, VALUE parentPath, VALUE datasetType);
     static VALUE get_dataset_definition(VALUE self, VALUE path, VALUE datasetType);
     static VALUE get_dataset_documentation(VALUE self, VALUE path, VALUE datasetType);
