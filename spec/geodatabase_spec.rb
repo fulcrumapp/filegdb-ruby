@@ -54,5 +54,9 @@ describe "FileGDB" do
   it 'creates a feature dataset' do
     lambda { @db.create_feature_dataset(feature_dataset_definition) }.should_not raise_error
   end
+
+  it 'closes a table' do
+    lambda { @db.close_table(@table) }.should_not raise_error
+  end
 end
 

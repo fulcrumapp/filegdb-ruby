@@ -155,6 +155,22 @@ VALUE geodatabase::open_table(VALUE self, VALUE table_name) {
   return result->wrapped();
 }
 
+VALUE geodatabase::close_table(VALUE self, VALUE tableObject) {
+  geodatabase *db = unwrap(self);
+  table *t = table::unwrap(tableObject);
+
+  fgdbError hr = db->_gdb->CloseTable(t->value());
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  db->remove_dependency(t);
+
+  return Qnil;
+}
+
 VALUE geodatabase::get_child_datasets(VALUE self, VALUE parent_path, VALUE dataset_type) {
   geodatabase *db = unwrap(self);
 
@@ -351,6 +367,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "close", FGDB_METHOD(geodatabase::close), 0);
   rb_define_method(geodatabase::_klass, "create_table", FGDB_METHOD(geodatabase::create_table), 2);
   rb_define_method(geodatabase::_klass, "open_table", FGDB_METHOD(geodatabase::open_table), 1);
+  rb_define_method(geodatabase::_klass, "close_table", FGDB_METHOD(geodatabase::close_table), 1);
   rb_define_method(geodatabase::_klass, "get_child_datasets", FGDB_METHOD(geodatabase::get_child_datasets), 2);
   rb_define_method(geodatabase::_klass, "get_dataset_definition", FGDB_METHOD(geodatabase::get_dataset_definition), 2);
   rb_define_method(geodatabase::_klass, "get_dataset_documentation", FGDB_METHOD(geodatabase::get_dataset_documentation), 2);
