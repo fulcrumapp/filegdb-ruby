@@ -6,6 +6,7 @@ describe "FileGDB" do
   end
 
   before(:each) do
+    delete_database rescue nil
     @db = create_database
     @table = @db.create_table('', table_definition)
   end
@@ -20,6 +21,10 @@ describe "FileGDB" do
 
   it 'gets the dataset types' do
     @db.get_dataset_types.should have(32).items
+  end
+
+  it 'gets the dataset relationship types' do
+    @db.get_dataset_relationship_types.should have(16).items
   end
 end
 
