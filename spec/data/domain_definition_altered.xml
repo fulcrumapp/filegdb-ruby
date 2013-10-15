@@ -15,6 +15,10 @@
       <Code xsi:type='xs:int'>2</Code>
     </CodedValue>
     <CodedValue xsi:type='esri:CodedValue'>
+      <Name>Mud</Name>
+      <Code xsi:type='xs:int'>3</Code>
+    </CodedValue>
+    <CodedValue xsi:type='esri:CodedValue'>
       <Name>Dirt</Name>
       <Code xsi:type='xs:int'>4</Code>
     </CodedValue>

@@ -76,5 +76,10 @@ describe "FileGDB" do
   it 'creates a domain' do
     lambda { @db.create_domain(domain_definition) }.should_not raise_error
   end
+
+  it 'alters a domain' do
+    lambda { @db.create_domain(domain_definition) }.should_not raise_error
+    lambda { @db.alter_domain(domain_definition_altered) }.should_not raise_error
+  end
 end
 

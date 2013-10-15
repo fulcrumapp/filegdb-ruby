@@ -24,6 +24,10 @@ def domain_definition
   File.read(File.join(data_directory, 'domain_definition.xml'))
 end
 
+def domain_definition_altered
+  File.read(File.join(data_directory, 'domain_definition_altered.xml'))
+end
+
 def create_database
   FileGDB::Geodatabase.create(TEST_FILE_NAME)
 end
