@@ -182,6 +182,27 @@ VALUE geodatabase::get_dataset_definition(VALUE self, VALUE path, VALUE dataset_
   return rb_str_new2(definition.c_str());
 }
 
+VALUE geodatabase::get_dataset_types(VALUE self) {
+  geodatabase *db = unwrap(self);
+
+  std::vector<std::wstring> datasetTypes;
+
+  fgdbError hr = db->_gdb->GetDatasetTypes(datasetTypes);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  VALUE result = rb_ary_new();
+
+  for (typename std::vector<wstring>::iterator it = datasetTypes.begin(); it != datasetTypes.end(); ++it) {
+    rb_ary_push(result, rb_str_new2(to_char_array(*it)));
+  }
+
+  return result;
+}
+
 void geodatabase::define(VALUE module)
 {
   geodatabase::_klass = rb_define_class_under(module, "Geodatabase", rb_cObject);
@@ -194,6 +215,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "open_table", FGDB_METHOD(geodatabase::open_table), 1);
   rb_define_method(geodatabase::_klass, "get_child_datasets", FGDB_METHOD(geodatabase::get_child_datasets), 2);
   rb_define_method(geodatabase::_klass, "get_dataset_definition", FGDB_METHOD(geodatabase::get_dataset_definition), 2);
+  rb_define_method(geodatabase::_klass, "get_dataset_types", FGDB_METHOD(geodatabase::get_dataset_types), 0);
 }
 
 }
