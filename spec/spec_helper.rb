@@ -20,6 +20,10 @@ def feature_dataset_definition
   File.read(File.join(data_directory, 'feature_dataset_definition.xml'))
 end
 
+def domain_definition
+  File.read(File.join(data_directory, 'domain_definition.xml'))
+end
+
 def create_database
   FileGDB::Geodatabase.create(TEST_FILE_NAME)
 end

@@ -72,5 +72,9 @@ describe "FileGDB" do
     @db.close_table(@table)
     lambda { @db.delete('\\TestTable', 'Table') }.should_not raise_error
   end
+
+  it 'creates a domain' do
+    lambda { @db.create_domain(domain_definition) }.should_not raise_error
+  end
 end
 
