@@ -39,6 +39,10 @@ describe "FileGDB" do
     @db.get_dataset_definition('\\TestTable', 'Table').length.should eq(7188)
   end
 
+  it 'gets the dataset documentation' do
+    lambda { @db.get_dataset_documentation('\\TestTable', 'Table') }.should raise_error
+  end
+
   it 'gets the child dataset definitions' do
     @db.get_child_dataset_definitions('\\TestTable', 'Table').should have(0).items
   end
