@@ -31,6 +31,7 @@ namespace filegdb {
     static VALUE get_related_datasets(VALUE self, VALUE path, VALUE relType, VALUE datasetType);
     static VALUE create_domain(VALUE self, VALUE domainDefinition);
     static VALUE alter_domain(VALUE self, VALUE domainDefinition);
+    static VALUE delete_domain(VALUE self, VALUE domainName);
 
     static void define(VALUE module);
 
