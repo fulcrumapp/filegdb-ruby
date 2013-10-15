@@ -34,5 +34,9 @@ describe "FileGDB" do
   it 'gets the related datasets' do
     @db.get_related_datasets('', '', '').should have(0).items
   end
+
+  it 'gets the dataset definition' do
+    @db.get_dataset_definition('\\TestTable', 'Table').length.should eq(7188)
+  end
 end
 
