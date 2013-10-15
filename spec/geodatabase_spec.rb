@@ -100,5 +100,8 @@ describe "FileGDB" do
   it 'fails to get the domain definition when the domain does not exist' do
     lambda { @db.get_domain_definition('ThisDomainDoesNotExist') }.should raise_error
   end
-end
 
+  it 'gets the query name of a table' do
+    @db.get_query_name('TestTable').should eq('TestTable')
+  end
+end

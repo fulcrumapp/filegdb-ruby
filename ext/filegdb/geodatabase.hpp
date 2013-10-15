@@ -33,6 +33,7 @@ namespace filegdb {
     static VALUE alter_domain(VALUE self, VALUE domainDefinition);
     static VALUE delete_domain(VALUE self, VALUE domainName);
     static VALUE get_domain_definition(VALUE self, VALUE domainName);
+    static VALUE get_query_name(VALUE self, VALUE path);
 
     static void define(VALUE module);
 
