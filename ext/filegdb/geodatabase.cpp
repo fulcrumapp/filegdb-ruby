@@ -182,6 +182,58 @@ VALUE geodatabase::get_dataset_definition(VALUE self, VALUE path, VALUE dataset_
   return rb_str_new2(definition.c_str());
 }
 
+VALUE geodatabase::get_child_dataset_definitions(VALUE self, VALUE parentPath, VALUE datasetType) {
+  CHECK_ARGUMENT_STRING(parentPath);
+  CHECK_ARGUMENT_STRING(datasetType);
+
+  geodatabase *db = unwrap(self);
+
+  std::vector<std::string> definitions;
+  std::wstring wparentPath = to_wstring(RSTRING_PTR(parentPath));
+  std::wstring wdatasetType = to_wstring(RSTRING_PTR(datasetType));
+
+  fgdbError hr = db->_gdb->GetChildDatasetDefinitions(wparentPath, wdatasetType, definitions);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  VALUE result = rb_ary_new();
+
+  for (typename std::vector<string>::iterator it = definitions.begin(); it != definitions.end(); ++it) {
+    rb_ary_push(result, rb_str_new2((*it).c_str()));
+  }
+
+  return result;
+}
+
+VALUE geodatabase::get_related_dataset_definitions(VALUE self, VALUE parentPath, VALUE relType, VALUE datasetType) {
+  CHECK_ARGUMENT_STRING(parentPath);
+  CHECK_ARGUMENT_STRING(datasetType);
+
+  geodatabase *db = unwrap(self);
+
+  std::vector<std::string> definitions;
+  std::wstring wparentPath = to_wstring(RSTRING_PTR(parentPath));
+  std::wstring wdatasetType = to_wstring(RSTRING_PTR(datasetType));
+
+  fgdbError hr = db->_gdb->GetChildDatasetDefinitions(wparentPath, wdatasetType, definitions);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  VALUE result = rb_ary_new();
+
+  for (typename std::vector<string>::iterator it = definitions.begin(); it != definitions.end(); ++it) {
+    rb_ary_push(result, rb_str_new2((*it).c_str()));
+  }
+
+  return result;
+}
+
 VALUE geodatabase::get_dataset_types(VALUE self) {
   geodatabase *db = unwrap(self);
 
@@ -264,6 +316,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "open_table", FGDB_METHOD(geodatabase::open_table), 1);
   rb_define_method(geodatabase::_klass, "get_child_datasets", FGDB_METHOD(geodatabase::get_child_datasets), 2);
   rb_define_method(geodatabase::_klass, "get_dataset_definition", FGDB_METHOD(geodatabase::get_dataset_definition), 2);
+  rb_define_method(geodatabase::_klass, "get_child_dataset_definitions", FGDB_METHOD(geodatabase::get_child_dataset_definitions), 2);
   rb_define_method(geodatabase::_klass, "get_dataset_types", FGDB_METHOD(geodatabase::get_dataset_types), 0);
   rb_define_method(geodatabase::_klass, "get_dataset_relationship_types", FGDB_METHOD(geodatabase::get_dataset_relationship_types), 0);
   rb_define_method(geodatabase::_klass, "get_related_datasets", FGDB_METHOD(geodatabase::get_related_datasets), 3);
