@@ -1,5 +1,11 @@
 require 'filegdb'
 
+RSpec.configure do |config|
+  config.color_enabled = true
+  config.tty = true
+  config.formatter = :documentation
+end
+
 TEST_FILE_NAME = 'testfile.gdb'
 
 def data_directory
