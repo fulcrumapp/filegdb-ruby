@@ -32,6 +32,7 @@ namespace filegdb {
     static VALUE create_domain(VALUE self, VALUE domainDefinition);
     static VALUE alter_domain(VALUE self, VALUE domainDefinition);
     static VALUE delete_domain(VALUE self, VALUE domainName);
+    static VALUE get_domain_definition(VALUE self, VALUE domainName);
 
     static void define(VALUE module);
 

@@ -461,6 +461,23 @@ VALUE geodatabase::delete_domain(VALUE self, VALUE domainName) {
   return Qnil;
 }
 
+VALUE geodatabase::get_domain_definition(VALUE self, VALUE domainName) {
+  CHECK_ARGUMENT_STRING(domainName);
+
+  geodatabase *db = unwrap(self);
+
+  std::string result;
+
+  fgdbError hr = db->_gdb->GetDomainDefinition(to_wstring(RSTRING_PTR(domainName)), result);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return rb_str_new2(result.c_str());
+}
+
 void geodatabase::define(VALUE module)
 {
   geodatabase::_klass = rb_define_class_under(module, "Geodatabase", rb_cObject);
@@ -487,6 +504,7 @@ void geodatabase::define(VALUE module)
   rb_define_method(geodatabase::_klass, "create_domain", FGDB_METHOD(geodatabase::create_domain), 1);
   rb_define_method(geodatabase::_klass, "alter_domain", FGDB_METHOD(geodatabase::alter_domain), 1);
   rb_define_method(geodatabase::_klass, "delete_domain", FGDB_METHOD(geodatabase::delete_domain), 1);
+  rb_define_method(geodatabase::_klass, "get_domain_definition", FGDB_METHOD(geodatabase::get_domain_definition), 1);
 }
 
 }

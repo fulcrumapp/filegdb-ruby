@@ -91,5 +91,14 @@ describe "FileGDB" do
     lambda { @db.create_domain(domain_definition) }.should_not raise_error
     lambda { @db.delete_domain('ThisDomainDoesNotExist') }.should raise_error
   end
+
+  it 'gets the domain definition' do
+    lambda { @db.create_domain(domain_definition) }.should_not raise_error
+    @db.get_domain_definition('RoadSurfaceType').should_not be_nil
+  end
+
+  it 'fails to get the domain definition when the domain does not exist' do
+    lambda { @db.get_domain_definition('ThisDomainDoesNotExist') }.should raise_error
+  end
 end
 
