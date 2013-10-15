@@ -18,6 +18,7 @@ namespace filegdb {
     static VALUE open_table(VALUE self, VALUE tableName);
     static VALUE get_child_datasets(VALUE self, VALUE parentPath, VALUE datasetType);
     static VALUE get_dataset_definition(VALUE self, VALUE path, VALUE datasetType);
+    static VALUE get_dataset_documentation(VALUE self, VALUE path, VALUE datasetType);
     static VALUE get_child_dataset_definitions(VALUE self, VALUE parentPath, VALUE datasetType);
     static VALUE get_related_dataset_definitions(VALUE self, VALUE path, VALUE relType, VALUE datasetType);
     static VALUE get_dataset_types(VALUE self);

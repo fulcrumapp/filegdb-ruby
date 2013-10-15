@@ -42,5 +42,9 @@ describe "FileGDB" do
   it 'gets the child dataset definitions' do
     @db.get_child_dataset_definitions('\\TestTable', 'Table').should have(0).items
   end
+
+  it 'gets the related dataset definitions' do
+    @db.get_related_dataset_definitions('\\TestTable', '', 'Table').should have(0).items
+  end
 end
 
