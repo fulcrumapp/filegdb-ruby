@@ -52,12 +52,28 @@ VALUE table::insert(VALUE self, VALUE row) {
   return self;
 }
 
+VALUE table::get_definition(VALUE self) {
+  filegdb::table *table = unwrap(self);
+
+  std::string definition;
+
+  fgdbError hr = table->value().GetDefinition(definition);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return rb_str_new2(definition.c_str());
+}
+
 void table::define(VALUE module)
 {
   table::_klass = rb_define_class_under(module, "Table", rb_cObject);
   base::define(table::_klass, false);
   rb_define_method(table::_klass, "create_row_object", FGDB_METHOD(table::create_row_object), 0);
   rb_define_method(table::_klass, "insert", FGDB_METHOD(table::insert), 1);
+  rb_define_method(table::_klass, "get_definition", FGDB_METHOD(table::get_definition), 0);
 }
 
 }

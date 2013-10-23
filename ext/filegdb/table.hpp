@@ -13,6 +13,8 @@ namespace filegdb {
     static VALUE insert(VALUE self, VALUE row);
     static void define(VALUE module);
 
+    static VALUE get_definition(VALUE self);
+
     virtual VALUE klass();
     static VALUE _klass;
 

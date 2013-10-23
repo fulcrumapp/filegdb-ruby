@@ -41,7 +41,7 @@ Note: Installing GCC through homebrew is safe and will not interfere with your X
 
 GCC
 
-  if `which gcc-4.00000`.strip.length == 0
+  if `which gcc-4.9`.strip.length == 0
     puts msg
     exit
   end
