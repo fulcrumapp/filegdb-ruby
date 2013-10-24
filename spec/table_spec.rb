@@ -13,7 +13,7 @@ describe 'Table' do
   end
 
   it 'gets the definition' do
-    @table.get_definition.should be_nil
+    @table.get_definition.should_not be_nil
   end
 end
 
