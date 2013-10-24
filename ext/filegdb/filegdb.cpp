@@ -26,5 +26,6 @@ extern "C" {
     filegdb::point_shape_buffer::define(cFileGDB);
     filegdb::multi_point_shape_buffer::define(cFileGDB);
     filegdb::field_info::define(cFileGDB);
+    filegdb::spatial_reference::define(cFileGDB);
   }
 }

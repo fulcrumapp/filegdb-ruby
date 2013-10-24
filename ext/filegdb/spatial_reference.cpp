@@ -34,7 +34,7 @@ VALUE spatial_reference::get_spatial_reference_text(VALUE self) {
 void spatial_reference::define(VALUE module)
 {
   spatial_reference::_klass = rb_define_class_under(module, "SpatialReference", rb_cObject);
-  base::define(spatial_reference::_klass, false);
+  base::define(spatial_reference::_klass, true);
   rb_define_method(spatial_reference::_klass, "get_spatial_reference_text", FGDB_METHOD(spatial_reference::get_spatial_reference_text), 0);
 }
 
