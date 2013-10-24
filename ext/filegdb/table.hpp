@@ -16,6 +16,7 @@ namespace filegdb {
     static VALUE get_definition(VALUE self);
     static VALUE get_documentation(VALUE self);
     static VALUE set_documentation(VALUE self, VALUE documentation);
+    static VALUE get_field_information(VALUE self);
 
     virtual VALUE klass();
     static VALUE _klass;

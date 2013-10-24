@@ -1,6 +1,7 @@
 
 #include "table.hpp"
 #include "row.hpp"
+#include "field_info.hpp"
 
 namespace filegdb {
 
@@ -97,6 +98,21 @@ VALUE table::set_documentation(VALUE self, VALUE documentation) {
   return Qnil;
 }
 
+VALUE table::get_field_information(VALUE self) {
+  filegdb::table *table = unwrap(self);
+
+  filegdb::field_info *info = new filegdb::field_info();
+
+  fgdbError hr = table->value().GetFieldInformation(info->value());
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return info->wrapped();
+}
+
 void table::define(VALUE module)
 {
   table::_klass = rb_define_class_under(module, "Table", rb_cObject);
@@ -106,6 +122,7 @@ void table::define(VALUE module)
   rb_define_method(table::_klass, "get_definition", FGDB_METHOD(table::get_definition), 0);
   rb_define_method(table::_klass, "get_documentation", FGDB_METHOD(table::get_documentation), 0);
   rb_define_method(table::_klass, "set_documentation", FGDB_METHOD(table::set_documentation), 1);
+  rb_define_method(table::_klass, "get_field_information", FGDB_METHOD(table::get_field_information), 0);
 }
 
 }
