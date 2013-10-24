@@ -11,6 +11,7 @@ namespace filegdb {
     static void define(VALUE module);
 
     static VALUE get_field_count(VALUE self);
+    static VALUE get_field_name(VALUE self, VALUE fieldIndex);
 
     virtual VALUE klass();
     static VALUE _klass;

@@ -16,6 +16,10 @@ describe 'FieldInfo' do
   it 'gets the field count' do
     @info.get_field_count.should eq(3)
   end
+
+  it 'gets the field name' do
+    @info.get_field_name(2).should eq('string_field')
+  end
 end
 
 
