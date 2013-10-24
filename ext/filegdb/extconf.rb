@@ -11,7 +11,7 @@ $libs = append_library $libs, 'FileGDBAPI'
 $LDFLAGS << " -Wl,-rpath,#{File.join(filegdb_path, 'lib')}"
 
 if RUBY_PLATFORM =~ /darwin12/
-  # libFileGDBAPI requires GCC compilation because it's C++ symbols are incompatible with LLVM 5.0
+  # libFileGDBAPI requires GCC compilation because its C++ symbols are incompatible with LLVM 5.0
   #
   # To install GCC on OSX:
   #
@@ -34,6 +34,8 @@ To install GCC on OSX:
    $ brew install --enable-cxx gcc49
 
 Note: Installing GCC through homebrew is safe and will not interfere with your Xcode installation.
+
+Report installation bugs here: https://github.com/spatialnetworks/filegdb-ruby
 
 ===========================================================================================================================
 ===========================================================================================================================
