@@ -11,6 +11,7 @@
 #include "multi_point_shape_buffer.hpp"
 #include "point.hpp"
 #include "field_info.hpp"
+#include "spatial_reference.hpp"
 
 VALUE cFileGDB;
 

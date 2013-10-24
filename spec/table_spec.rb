@@ -24,5 +24,9 @@ describe 'Table' do
     @table.set_documentation('Table Documentation')
     @table.get_documentation.should eq('Table Documentation')
   end
+
+  it 'gets the field information' do
+    @table.get_field_information.should_not be_nil
+  end
 end
 
