@@ -24,6 +24,14 @@ describe 'FieldInfo' do
   it 'gets the field type' do
     @info.get_field_type(2).should eq(4)
   end
+
+  it 'gets the field length' do
+    @info.get_field_length(2).should eq(4000)
+  end
+
+  it 'gets the field nullability' do
+    @info.get_field_is_nullable(2).should eq(true)
+  end
 end
 
 

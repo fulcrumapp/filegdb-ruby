@@ -13,6 +13,8 @@ namespace filegdb {
     static VALUE get_field_count(VALUE self);
     static VALUE get_field_name(VALUE self, VALUE fieldIndex);
     static VALUE get_field_type(VALUE self, VALUE fieldIndex);
+    static VALUE get_field_length(VALUE self, VALUE fieldIndex);
+    static VALUE get_field_is_nullable(VALUE self, VALUE fieldIndex);
 
     virtual VALUE klass();
     static VALUE _klass;
