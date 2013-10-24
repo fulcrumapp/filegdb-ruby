@@ -11,6 +11,7 @@ namespace filegdb {
     static void define(VALUE module);
 
     static VALUE get_spatial_reference_text(VALUE self);
+    static VALUE set_spatial_reference_text(VALUE self, VALUE srs);
 
     virtual VALUE klass();
     static VALUE _klass;
