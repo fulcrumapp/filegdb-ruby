@@ -19,5 +19,10 @@ describe 'Table' do
   it 'gets the documentation' do
     @table.get_documentation.should eq('')
   end
+
+  it 'sets the documentation' do
+    @table.set_documentation('Table Documentation')
+    @table.get_documentation.should eq('Table Documentation')
+  end
 end
 

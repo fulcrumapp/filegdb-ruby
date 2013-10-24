@@ -82,6 +82,21 @@ VALUE table::get_documentation(VALUE self) {
   return rb_str_new2(documentation.c_str());
 }
 
+VALUE table::set_documentation(VALUE self, VALUE documentation) {
+  CHECK_ARGUMENT_STRING(documentation);
+
+  filegdb::table *table = unwrap(self);
+
+  fgdbError hr = table->value().SetDocumentation(std::string(RSTRING_PTR(documentation)));
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
+  }
+
+  return Qnil;
+}
+
 void table::define(VALUE module)
 {
   table::_klass = rb_define_class_under(module, "Table", rb_cObject);
@@ -90,6 +105,7 @@ void table::define(VALUE module)
   rb_define_method(table::_klass, "insert", FGDB_METHOD(table::insert), 1);
   rb_define_method(table::_klass, "get_definition", FGDB_METHOD(table::get_definition), 0);
   rb_define_method(table::_klass, "get_documentation", FGDB_METHOD(table::get_documentation), 0);
+  rb_define_method(table::_klass, "set_documentation", FGDB_METHOD(table::set_documentation), 1);
 }
 
 }
