@@ -20,6 +20,10 @@ describe 'FieldInfo' do
   it 'gets the field name' do
     @info.get_field_name(2).should eq('string_field')
   end
+
+  it 'gets the field type' do
+    @info.get_field_type(2).should eq(4)
+  end
 end
 
 
