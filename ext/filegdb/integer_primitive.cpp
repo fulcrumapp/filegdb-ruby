@@ -34,7 +34,3 @@ void integer_primitive::define(VALUE module)
 }
 
 }
-
-
-
-

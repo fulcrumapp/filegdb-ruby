@@ -33,8 +33,3 @@ void double_primitive::define(VALUE module)
 }
 
 }
-
-
-
-
-
