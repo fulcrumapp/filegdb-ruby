@@ -9,6 +9,7 @@
 #include "shape_buffer.hpp"
 #include "point_shape_buffer.hpp"
 #include "multi_point_shape_buffer.hpp"
+#include "multi_part_shape_buffer.hpp"
 #include "point.hpp"
 #include "field_info.hpp"
 #include "spatial_reference.hpp"
@@ -25,6 +26,7 @@ extern "C" {
     filegdb::shape_buffer::define(cFileGDB);
     filegdb::point_shape_buffer::define(cFileGDB);
     filegdb::multi_point_shape_buffer::define(cFileGDB);
+    filegdb::multi_part_shape_buffer::define(cFileGDB);
     filegdb::field_info::define(cFileGDB);
     filegdb::spatial_reference::define(cFileGDB);
   }
