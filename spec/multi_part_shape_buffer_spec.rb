@@ -17,6 +17,10 @@ describe 'MultiPartShapeBuffer' do
     @shape.get_num_points.should eq(NUM_POINTS)
   end
 
+  it 'gets the number of parts' do
+    @shape.get_num_parts.should eq(NUM_PARTS)
+  end
+
   it 'gets the points' do
     @shape.get_points.should have(3).items
   end
