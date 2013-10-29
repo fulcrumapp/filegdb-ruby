@@ -2,6 +2,8 @@
 #include "point.hpp"
 #include "shape_buffer.hpp"
 #include "multi_part_shape_buffer.hpp"
+#include "integer_primitive.hpp"
+#include "double_primitive.hpp"
 
 namespace filegdb {
 
@@ -80,7 +82,8 @@ VALUE multi_part_shape_buffer::get_parts(VALUE self) {
   VALUE arrayOfParts = rb_ary_new();
 
   for (int i = 0; i < numParts; ++i) {
-    rb_ary_push(arrayOfParts, INT2FIX(parts[i]));
+    integer_primitive *value = new integer_primitive(&parts[i]);
+    rb_ary_push(arrayOfParts, value->wrapped());
   }
 
   return arrayOfParts;

@@ -13,7 +13,8 @@
 #include "point.hpp"
 #include "field_info.hpp"
 #include "spatial_reference.hpp"
-#include "primitive.hpp"
+#include "integer_primitive.hpp"
+#include "double_primitive.hpp"
 
 VALUE cFileGDB;
 
