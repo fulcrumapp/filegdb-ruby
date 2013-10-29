@@ -11,6 +11,7 @@ namespace filegdb {
 
     static VALUE setup(VALUE self, VALUE shapeType, VALUE numberOfParts, VALUE numberOfPoints);
     static VALUE get_points(VALUE self);
+    static VALUE get_parts(VALUE self);
     static VALUE get_num_points(VALUE self);
     static VALUE get_num_parts(VALUE self);
     static VALUE get_zs(VALUE self);

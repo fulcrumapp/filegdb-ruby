@@ -58,6 +58,34 @@ VALUE multi_part_shape_buffer::get_points(VALUE self) {
   return arrayOfPoints;
 }
 
+VALUE multi_part_shape_buffer::get_parts(VALUE self) {
+  multi_part_shape_buffer *shape = unwrap(self);
+
+  int *parts = NULL;
+
+  fgdbError hr = shape->value().GetParts(parts);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+  }
+
+  int numParts = 0;
+
+  hr = shape->value().GetNumParts(numParts);
+
+  if (FGDB_IS_FAILURE(hr)) {
+    FGDB_RAISE_ERROR(hr);
+  }
+
+  VALUE arrayOfParts = rb_ary_new();
+
+  for (int i = 0; i < numParts; ++i) {
+    rb_ary_push(arrayOfParts, INT2FIX(parts[i]));
+  }
+
+  return arrayOfParts;
+}
+
 VALUE multi_part_shape_buffer::get_num_points(VALUE self) {
   multi_part_shape_buffer *shape = unwrap(self);
 
@@ -254,6 +282,7 @@ void multi_part_shape_buffer::define(VALUE module)
   base::define(multi_part_shape_buffer::_klass, true);
   rb_define_method(multi_part_shape_buffer::_klass, "setup", FGDB_METHOD(multi_part_shape_buffer::setup), 3);
   rb_define_method(multi_part_shape_buffer::_klass, "get_points", FGDB_METHOD(multi_part_shape_buffer::get_points), 0);
+  rb_define_method(multi_part_shape_buffer::_klass, "get_parts", FGDB_METHOD(multi_part_shape_buffer::get_parts), 0);
   rb_define_method(multi_part_shape_buffer::_klass, "get_num_points", FGDB_METHOD(multi_part_shape_buffer::get_num_points), 0);
   rb_define_method(multi_part_shape_buffer::_klass, "get_num_parts", FGDB_METHOD(multi_part_shape_buffer::get_num_parts), 0);
   rb_define_method(multi_part_shape_buffer::_klass, "z", FGDB_METHOD(multi_part_shape_buffer::get_zs), 0);

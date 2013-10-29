@@ -13,6 +13,7 @@
 #include "point.hpp"
 #include "field_info.hpp"
 #include "spatial_reference.hpp"
+#include "primitive.hpp"
 
 VALUE cFileGDB;
 
@@ -29,5 +30,7 @@ extern "C" {
     filegdb::multi_part_shape_buffer::define(cFileGDB);
     filegdb::field_info::define(cFileGDB);
     filegdb::spatial_reference::define(cFileGDB);
+    filegdb::integer_primitive::define(cFileGDB);
+    filegdb::double_primitive::define(cFileGDB);
   }
 }
