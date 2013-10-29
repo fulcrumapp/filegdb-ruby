@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 NUM_POINTS = 3
-NUM_PARTS  = 3
+NUM_PARTS  = 1
 
 describe 'MultiPartShapeBuffer' do
   before(:each) do
