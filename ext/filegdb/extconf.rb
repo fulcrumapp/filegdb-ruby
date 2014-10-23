@@ -10,13 +10,12 @@ $libs = append_library $libs, 'FileGDBAPI'
 
 $LDFLAGS << " -Wl,-rpath,#{File.join(filegdb_path, 'lib')}"
 
-if RUBY_PLATFORM =~ /darwin12/
-  # libFileGDBAPI requires GCC compilation because its C++ symbols are incompatible with LLVM 5.0
+if RUBY_PLATFORM =~ /darwin/
+  # libFileGDBAPI requires GCC compilation because its C++ symbols are incompatible with LLVM/clang
   #
   # To install GCC on OSX:
   #
-  #   $ brew tap homebrew/versions
-  #   $ brew install --enable-cxx gcc49
+  #   $ brew install gcc
   #
 
   msg = <<-GCC
@@ -26,12 +25,11 @@ if RUBY_PLATFORM =~ /darwin12/
 ===========================================================================================================================
 ===========================================================================================================================
 
-The filegdb gem requires GCC on OSX Mavericks because the C++ symbols in libFileGDBAPI.dylib are incompatible with LLVM 5.0
+The filegdb gem requires GCC on OSX because the C++ symbols in libFileGDBAPI.dylib are incompatible with LLVM/clang
 
 To install GCC on OSX:
 
-   $ brew tap homebrew/versions
-   $ brew install --enable-cxx gcc49
+   $ brew install gcc
 
 Note: Installing GCC through homebrew is safe and will not interfere with your Xcode installation.
 
