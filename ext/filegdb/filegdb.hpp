@@ -12,9 +12,9 @@ using namespace FileGDBAPI;
 typedef VALUE (*RB_INSTANCE_METHOD)(...);
 
 #define FGDB_IS_FAILURE(hr) ((hr) != S_OK)
-#define FGDB_RAISE_ERROR(hr) rb_raise(rb_eRuntimeError, fgdb_error_string(hr))
-#define FGDB_FATAL(msg) rb_raise(rb_eRuntimeError, msg)
-#define FGDB_FATAL_ARGUMENT(msg) rb_raise(rb_eArgError, msg)
+#define FGDB_RAISE_ERROR(hr) rb_raise(rb_eRuntimeError, "%s", fgdb_error_string(hr))
+#define FGDB_FATAL(msg) rb_raise(rb_eRuntimeError, "%s", msg)
+#define FGDB_FATAL_ARGUMENT(msg) rb_raise(rb_eArgError, "%s", msg)
 #define FGDB_METHOD(method) ((RB_INSTANCE_METHOD)&method)
 
 #define CHECK_ARGUMENT_STRING(arg) \

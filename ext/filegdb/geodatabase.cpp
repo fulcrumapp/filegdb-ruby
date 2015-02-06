@@ -39,7 +39,8 @@ VALUE geodatabase::create(VALUE klass, VALUE filename) {
   hr = CreateGeodatabase(name, *gdb);
 
   if (FGDB_IS_FAILURE(hr)) {
-    rb_raise(rb_eRuntimeError, fgdb_error_string(hr));
+    FGDB_RAISE_ERROR(hr);
+    return Qnil;
   }
 
   geodatabase *db = new geodatabase();
