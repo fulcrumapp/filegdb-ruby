@@ -18,7 +18,7 @@ describe 'FieldInfo' do
   end
 
   it 'gets the field name' do
-    @table.get_field_information.get_field_name(2).should eq('string_field')
+    @info.get_field_name(2).should eq('string_field')
   end
 
   it 'gets the field type' do
