@@ -1,4 +1,5 @@
 #include "filegdb.hpp"
+#include <cstdlib>
 
 const std::wstring to_wstring(const char *input) {
   std::string converted(input);

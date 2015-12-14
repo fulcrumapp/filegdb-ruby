@@ -95,7 +95,7 @@ VALUE geodatabase::close(VALUE self) {
     return Qnil;
   }
 
-  db->_value = NULL;
+  db->_value = Qnil;
 
   return Qnil;
 }
@@ -312,7 +312,7 @@ VALUE geodatabase::get_child_dataset_definitions(VALUE self, VALUE parentPath, V
 
   VALUE result = rb_ary_new();
 
-  for (typename std::vector<string>::iterator it = definitions.begin(); it != definitions.end(); ++it) {
+  for (std::vector<string>::iterator it = definitions.begin(); it != definitions.end(); ++it) {
     rb_ary_push(result, rb_str_new2((*it).c_str()));
   }
 
@@ -340,7 +340,7 @@ VALUE geodatabase::get_related_dataset_definitions(VALUE self, VALUE path, VALUE
 
   VALUE result = rb_ary_new();
 
-  for (typename std::vector<string>::iterator it = definitions.begin(); it != definitions.end(); ++it) {
+  for (std::vector<string>::iterator it = definitions.begin(); it != definitions.end(); ++it) {
     rb_ary_push(result, rb_str_new2((*it).c_str()));
   }
 
@@ -361,7 +361,7 @@ VALUE geodatabase::get_dataset_types(VALUE self) {
 
   VALUE result = rb_ary_new();
 
-  for (typename std::vector<wstring>::iterator it = datasetTypes.begin(); it != datasetTypes.end(); ++it) {
+  for (std::vector<wstring>::iterator it = datasetTypes.begin(); it != datasetTypes.end(); ++it) {
     rb_ary_push(result, rb_str_new2(to_string(*it).c_str()));
   }
 
@@ -382,7 +382,7 @@ VALUE geodatabase::get_dataset_relationship_types(VALUE self) {
 
   VALUE result = rb_ary_new();
 
-  for (typename std::vector<wstring>::iterator it = datasetTypes.begin(); it != datasetTypes.end(); ++it) {
+  for (std::vector<wstring>::iterator it = datasetTypes.begin(); it != datasetTypes.end(); ++it) {
     rb_ary_push(result, rb_str_new2(to_string(*it).c_str()));
   }
 
@@ -410,7 +410,7 @@ VALUE geodatabase::get_related_datasets(VALUE self, VALUE path, VALUE relType, V
 
   VALUE result = rb_ary_new();
 
-  for (typename std::vector<wstring>::iterator it = datasets.begin(); it != datasets.end(); ++it) {
+  for (std::vector<wstring>::iterator it = datasets.begin(); it != datasets.end(); ++it) {
     rb_ary_push(result, rb_str_new2(to_string(*it).c_str()));
   }
 
