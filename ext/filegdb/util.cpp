@@ -7,7 +7,7 @@ const std::wstring to_wstring(const char *input) {
 }
 
 const std::string to_string(std::wstring str) {
-  static char result[16384];
+  static char result[16384] = { 0 };
 
   std::wcstombs(result, str.c_str(), sizeof(result));
 
