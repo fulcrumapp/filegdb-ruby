@@ -1,4 +1,3 @@
-
 #include "shape_buffer.hpp"
 
 namespace filegdb {

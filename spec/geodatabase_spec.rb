@@ -36,7 +36,7 @@ describe "FileGDB" do
   end
 
   it 'gets the dataset definition' do
-    @db.get_dataset_definition('\\TestTable', 'Table').length.should eq(7188)
+    @db.get_dataset_definition('\\TestTable', 'Table').length.should eq(7022)
   end
 
   it 'gets the dataset documentation' do
@@ -61,7 +61,7 @@ describe "FileGDB" do
 
   it 'renames a table' do
     lambda { @db.rename('\\TestTable', 'Table', 'TestTableNew') }.should_not raise_error
-    @db.get_dataset_definition('\\TestTableNew', 'Table').length.should eq(5839)
+    @db.get_dataset_definition('\\TestTableNew', 'Table').length.should eq(5559)
   end
 
   it 'moves a table' do

@@ -1,4 +1,3 @@
-
 #include "row.hpp"
 #include "shape_buffer.hpp"
 
@@ -53,7 +52,7 @@ VALUE row::get_string(VALUE self, VALUE column) {
     return Qnil;
   }
 
-  return rb_str_new2(to_char_array(wvalue));
+  return rb_str_new2(to_string(wvalue).c_str());
 }
 
 VALUE row::set_geometry(VALUE self, VALUE geometry) {

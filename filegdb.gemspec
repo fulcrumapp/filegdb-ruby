@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Zac McCormick"]
   gem.email         = ["zac.mccormick@gmail.com"]
   gem.description   = %q{ESRI FileGDB bindings for ruby}
-  gem.summary       = %q{ESRI FileGDB bindings for ruby. Currently contains native extensions for FileGDB API 1.3}
+  gem.summary       = %q{ESRI FileGDB bindings for ruby. Currently contains native extensions for FileGDB API 1.4}
   gem.homepage      = "https://github.com/spatialnetworks/filegdb-ruby"
   gem.licenses      = ['BSD']
 

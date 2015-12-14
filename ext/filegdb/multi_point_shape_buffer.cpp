@@ -1,4 +1,3 @@
-
 #include "point.hpp"
 #include "shape_buffer.hpp"
 #include "multi_point_shape_buffer.hpp"

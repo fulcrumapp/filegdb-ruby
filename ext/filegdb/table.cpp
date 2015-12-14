@@ -1,4 +1,3 @@
-
 #include "table.hpp"
 #include "row.hpp"
 #include "field_info.hpp"
