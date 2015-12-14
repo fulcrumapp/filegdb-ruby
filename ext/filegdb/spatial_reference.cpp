@@ -28,7 +28,7 @@ VALUE spatial_reference::get_spatial_reference_text(VALUE self) {
     return Qnil;
   }
 
-  return rb_str_new2(to_char_array(text));
+  return rb_str_new2(to_string(text).c_str());
 }
 
 VALUE spatial_reference::set_spatial_reference_text(VALUE self, VALUE srs) {

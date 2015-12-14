@@ -45,7 +45,7 @@ VALUE field_info::get_field_name(VALUE self, VALUE fieldIndex) {
     return Qnil;
   }
 
-  return rb_str_new2(to_char_array(fieldName));
+  return rb_str_new2(to_string(fieldName).c_str());
 }
 
 VALUE field_info::get_field_type(VALUE self, VALUE fieldIndex) {

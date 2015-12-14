@@ -1,16 +1,20 @@
 #include "filegdb.hpp"
 
-std::wstring to_wstring(const char *input) {
+const std::wstring to_wstring(const char *input) {
   std::string converted(input);
   return std::wstring(converted.begin(), converted.end());
 }
 
-const char* to_char_array(std::wstring str) {
-  return std::string(str.begin(), str.end()).c_str();
+const std::string to_string(std::wstring str) {
+  static char result[16384];
+
+  std::wcstombs(result, str.c_str(), sizeof(result));
+
+  return std::string(result);
 }
 
-const char *fgdb_error_string(fgdbError hr) {
+const std::string fgdb_error_string(fgdbError hr) {
   wstring errorText;
   ErrorInfo::GetErrorDescription(hr, errorText);
-  return to_char_array(errorText);
+  return to_string(errorText);
 }

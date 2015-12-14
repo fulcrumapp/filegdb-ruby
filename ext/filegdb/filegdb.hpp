@@ -12,7 +12,7 @@ using namespace FileGDBAPI;
 typedef VALUE (*RB_INSTANCE_METHOD)(...);
 
 #define FGDB_IS_FAILURE(hr) ((hr) != S_OK)
-#define FGDB_RAISE_ERROR(hr) rb_raise(rb_eRuntimeError, "%s", fgdb_error_string(hr))
+#define FGDB_RAISE_ERROR(hr) rb_raise(rb_eRuntimeError, "%s", fgdb_error_string(hr).c_str())
 #define FGDB_FATAL(msg) rb_raise(rb_eRuntimeError, "%s", msg)
 #define FGDB_FATAL_ARGUMENT(msg) rb_raise(rb_eArgError, "%s", msg)
 #define FGDB_METHOD(method) ((RB_INSTANCE_METHOD)&method)
@@ -35,9 +35,9 @@ typedef VALUE (*RB_INSTANCE_METHOD)(...);
     return Qnil; \
   }
 
-std::wstring to_wstring(const char *input);
-const char *to_char_array(std::wstring str);
-const char *fgdb_error_string(fgdbError hr);
+const std::wstring to_wstring(const char *input);
+const std::string to_string(std::wstring str);
+const std::string fgdb_error_string(fgdbError hr);
 
 extern VALUE fgdb_klass;
 
