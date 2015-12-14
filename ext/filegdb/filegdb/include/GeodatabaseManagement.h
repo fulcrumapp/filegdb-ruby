@@ -3,7 +3,7 @@
 //
 
 /*
-  COPYRIGHT © 2012 ESRI
+  COPYRIGHT © 2015 ESRI
   TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
   Unpublished material - all rights reserved under the
   Copyright Laws of the United States and applicable international

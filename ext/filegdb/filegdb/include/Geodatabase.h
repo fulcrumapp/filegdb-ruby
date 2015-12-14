@@ -3,7 +3,7 @@
 //
 
 /*
-  COPYRIGHT © 2012 ESRI
+  COPYRIGHT © 2015 ESRI
   TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
   Unpublished material - all rights reserved under the
   Copyright Laws of the United States and applicable international
@@ -18,6 +18,9 @@
 
   email: contracts@esri.com
 */
+
+/// A set of functions for opening, querying, creating, listing and deleting file geodatabase data.
+/// @file Geodatabase.h
 
 #pragma once
 
@@ -50,6 +53,8 @@ namespace FileGDBAPI
 class EnumRows;
 class Row;
 class Table;
+class FieldDef;
+class SpatialReference;
 
 /// A class representing a File Geodatabase.
 class EXT_FILEGDB_API Geodatabase
@@ -134,29 +139,47 @@ public:
   /// If the feature dataset name is missing from the XML, a -2147220645 (INVALID_NAME) error will be returned.<br/>
   /// If the XML is not UTF-8 encoded, create will fail with an error code of -2147024809 (Invalid function arguments).<br/>
   /// <a href="FeatureDataset.xml">XML</a>
-  /// <br><br>
+  /// 
   /// @param[in]    featureDatasetDef The XML definition of the feature dataset to be created.
   /// @return       Error code indicating whether the method finished successfully.
   fgdbError CreateFeatureDataset(const std::string& featureDatasetDef);
 
+  /// Creates a new feature dataset.
+  /// If the feature dataset already exists, a -2147220733 (The dataset already exists) error will be returned.<br/>
+  /// @param[in]    path The name of the feature dataset to be created.
+  /// @param[in]    spatialReference The spatial reference of the feature dataset to be created.
+  /// @return       Error code indicating whether the method finished successfully.
+  fgdbError CreateFeatureDataset(const std::wstring& path, const SpatialReference& spatialReference);
+
   /// Creates a new table. This can either be a table or a feature class. If a geometry is to support Zs or Ms (measures), HasZ
   /// and or HasM must be set to true in the GeometryDef in the XML. The ZOrigin, MOrigin, ZScale and MScale
   /// must also be set in the SpatialReferences in the XML. These do not default.
-  /// See the samlples\XMLsamples\FC_GCS_LineMin.xml for an example. Domain definitions in the table XML definition 
-  /// will be ignored. Use Table.AlterField to assign a domain. <br/>
+  /// See the samples\XMLsamples\FC_GCS_LineMin.xml for an example. Domain definitions in the table XML definition 
+  /// will be ignored. Use Table.AlterField to assign a domain.
   /// If the table already exists, a -2147220653 (The table already exists) error will be returned.<br/>
   /// If the table name is missing from the XML, a -2147220654 (The table name is invalid) error will be returned.<br/>
   /// If the XML is not UTF-8 encoded, create will fail with an error code of -2147024809 (Invalid function arguments).<br/>
-  /// <br><a href="Table.xml">XML-Table</a><br><a href="FC_GCS_Line.xml">XML-Feature Class</a>
-  /// <br><a href="FC_GCS_LineMin.xml">XML-Feature Class with the minimum spatial reference definition</a>
-  /// <br><a href="FeatureClassInAFeatureDataset.xml">XML-Feature Class to be created in a feature dataset</a>
+  /// <a href="Table.xml">XML-Table</a><a href="FC_GCS_Line.xml">XML-Feature Class</a>
+  /// <a href="FC_GCS_LineMin.xml">XML-Feature Class with the minimum spatial reference definition</a>
+  /// <a href="FeatureClassInAFeatureDataset.xml">XML-Feature Class to be created in a feature dataset</a>
   /// @param[in]    tableDef The XML definition of the table to be created.
   /// @param[in]    parent The location where the table will be created. Pass an empty string if you want to
   /// create a table or feature class at the root. If you want to create a feature class in an existing feature
   /// dataset use the path "\USA".
-  /// @param[out]   table An Table instance for the newly created table.
+  /// @param[out]   table A Table instance for the newly created table.
   /// @return       Error code indicating whether the method finished successfully.
   fgdbError CreateTable(const std::string& tableDef, const std::wstring& parent, Table& table);
+
+  /// @param[in]    path The path of the table to create. If creating a table or feature class at
+  /// the root make sure to include "\". If creating a feature class in a feature dataset include
+  /// the feature dataset name in the path "\USA\counties".
+  /// @param[in]    fieldDefs The field definitions of the table to be created.
+  /// @param[in]    configurationKeyword The configuration keyword of the table to be created.
+  ///  If a empty string or unknown keyword is entered, the DEFAULTS keyword is used.
+  /// <a href="Keywords.html">Configuration Keywords</a>
+  /// @param[out]   table A Table instance for the newly created table.
+  /// @return       Error code indicating whether the method finished successfully.
+  fgdbError CreateTable(const std::wstring& path, const std::vector<FieldDef>& fieldDefs, const std::wstring& configurationKeyword, Table& table);
 
   /// Opens a table. This can also be used to open attributed and M:N relationship class tables.
   /// If the table does not exist, a -2147220655 (The table was not found) error will be returned.
@@ -194,6 +217,10 @@ public:
   /// @param[in]    datasetType The requested dataset's type as a string, e.g. "Table". <a href="ItemTypes.txt">DatasetType</a>
   /// @return       Error code indicating whether the method finished successfully.
   fgdbError Delete(const std::wstring& path, const std::wstring& datasetType);
+
+  /// Compacts the geodatabase.
+  /// @return       Error code indicating whether the method finished successfully.
+  fgdbError CompactDatabase();
   //@}
 
   /// @name Domains
@@ -239,7 +266,8 @@ public:
   /// @return       Error code indicating whether the method finished successfully.
   fgdbError GetQueryName(const std::wstring& path, std::wstring& queryName) const;
 
-  /// Executes a SQL statement on the geodatabase. This may or may not return a result set.
+  /// Executes a SQL statement on the geodatabase. This may or may not return a result set. 
+  /// A DELETE without a WHERE clause will result in a truncate. 
   /// If the SQL statement is invalid, an -2147220985 (An invalid SQL statement was used) error will be returned.<br/>
   /// @param[in]    sqlStmt The SQL statement to be executed.
   /// @param[in]    recycling Indicates whether the row enumerator should recycle memory.
