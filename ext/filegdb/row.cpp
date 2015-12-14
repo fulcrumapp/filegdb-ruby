@@ -1,4 +1,3 @@
-
 #include "row.hpp"
 #include "shape_buffer.hpp"
 

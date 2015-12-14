@@ -1,4 +1,3 @@
-
 #include "integer_primitive.hpp"
 
 namespace filegdb {

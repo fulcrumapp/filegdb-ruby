@@ -1,4 +1,3 @@
-
 #include "field_info.hpp"
 
 namespace filegdb {

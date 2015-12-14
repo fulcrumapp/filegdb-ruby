@@ -1,4 +1,3 @@
-
 #include "double_primitive.hpp"
 
 namespace filegdb {

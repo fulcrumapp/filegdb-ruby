@@ -1,4 +1,3 @@
-
 #include "spatial_reference.hpp"
 
 namespace filegdb {

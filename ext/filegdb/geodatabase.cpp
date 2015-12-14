@@ -1,4 +1,3 @@
-
 #include "geodatabase.hpp"
 #include "table.hpp"
 

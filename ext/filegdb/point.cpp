@@ -1,4 +1,3 @@
-
 #include "point.hpp"
 
 namespace filegdb {

@@ -1,5 +1,5 @@
-#ifndef __SHP_BASE_HPP__
-#define __SHP_BASE_HPP__
+#ifndef __FILEGDB_BASE_HPP__
+#define __FILEGDB_BASE_HPP__
 
 #include <vector>
 #include <algorithm>
@@ -114,8 +114,7 @@ namespace filegdb {
       }
     }
 
-    VALUE initialize_not_allowed()
-    {
+    VALUE initialize_not_allowed() {
       rb_raise(rb_eRuntimeError, "You cannot use #new on this class.");
       return Qnil;
     }
