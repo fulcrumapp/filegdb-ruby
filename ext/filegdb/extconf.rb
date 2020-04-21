@@ -8,6 +8,10 @@ have_library 'FileGDBAPI' or raise 'libFileGDBAPI not found'
 
 $libs = append_library $libs, 'FileGDBAPI'
 
+if `ld --help | grep disable-new-dtags | wc -l`.strip == '1'
+  $LDFLAGS << " -Wl,--disable-new-dtags"
+end
+
 $LDFLAGS << " -Wl,-rpath,#{File.join(filegdb_path, 'lib')}"
 
 create_makefile 'filegdb/filegdb'
