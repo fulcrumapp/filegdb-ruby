@@ -1,3 +1,4 @@
+require 'rspec/collection_matchers'
 require 'filegdb'
 
 RSpec.configure do |config|

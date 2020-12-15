@@ -19,5 +19,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'rake',          ['>= 0']
   gem.add_development_dependency 'rake-compiler', ['>= 0']
-  gem.add_development_dependency 'rspec',         ['~> 2.14.1']
+  gem.add_development_dependency 'rspec',         ['>= 0']
+  gem.add_development_dependency 'rspec-collection_matchers', ['>= 0']
 end
