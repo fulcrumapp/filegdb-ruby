@@ -8,6 +8,8 @@ have_library 'FileGDBAPI' or raise 'libFileGDBAPI not found'
 
 $libs = append_library $libs, 'FileGDBAPI'
 
+$CXXFLAGS += " -D_GLIBCXX_USE_CXX11_ABI=0 "
+
 if `ld --help | grep disable-new-dtags | wc -l`.strip == '1'
   $LDFLAGS << " -Wl,--disable-new-dtags"
 end
